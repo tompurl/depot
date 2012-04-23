@@ -9,6 +9,18 @@ fourth edition, version P2.2.
 
 ==== Setup
 
+You should set up your system according to the instructions in the book.
+However, this is what worked for me on my Ubuntu 11.10 system:
+
+    # Install RVM
+    # Install 1.9.3
+    $ rvm use 1.9.3
+    $ git clone <git address> .
+    $ cd depot
+    $ bundle install
+
+Please note that this package does *not* include a config/database.yml file
+for security reasons. This app uses Postgresql 8.4, so you will want something
+like this:
+
 TODO
-
-
