@@ -1,0 +1,12 @@
+== Depot
+
+=== README
+
+==== Overview
+
+This is the demo "depot" application from the Agile Web Development with Rails
+book.
+
+==== Setup
+
+TODO
