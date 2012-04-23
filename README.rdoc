@@ -4,9 +4,11 @@
 
 ==== Overview
 
-This is the demo "depot" application from the Agile Web Development with Rails
-book.
+This is the demo "depot" application from "Agile Web Development with Rails",
+fourth edition, version P2.2.
 
 ==== Setup
 
 TODO
+
+
