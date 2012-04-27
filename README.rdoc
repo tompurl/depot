@@ -13,14 +13,80 @@ You should set up your system according to the instructions in the book.
 However, this is what worked for me on my Ubuntu 11.10 system:
 
     # Install RVM
-    # Install 1.9.3
+    $ rvm dependencies
+    $ sudo apt-get install <dependencies>
+    $ sudo apt-get install postgresql-8.4 postgresql-server-dev-8.4
+    $ rvm install 1.9.3
     $ rvm use 1.9.3
     $ git clone <git address> .
     $ cd depot
     $ bundle install
 
+These steps will set passwords and create the necessary users and databases:
+
+    $ sudo -u postgres psql template1
+    $ ALTER USER postgres with encrypted password 'your_password';
+    $ sudo /etc/init.d/postgresql restart
+    $ sudo -u postgres createuser --createdb -A -P depot
+    Enter password for new role: yourpassword
+    Enter it again: yourpassword
+    Shall the new role be allowed to create more new roles? (y/n) n
+    $ sudo -u postgres createdb -O depot depot-dev
+
 Please note that this package does *not* include a config/database.yml file
 for security reasons. This app uses Postgresql 8.4, so you will want something
-like this:
+like this.
 
-TODO
+    development:
+      adapter: postgresql
+      encoding: unicode
+      database: depot-dev
+      pool: 5
+      username: depot
+      password: yourpassword
+
+    # Warning: The database defined as "test" will be erased and
+    # re-generated from your development database when you run "rake".
+    # Do not set this db to the same as development or production.
+    test:
+      adapter: postgresql
+      encoding: unicode
+      database: depot-test
+      pool: 5
+      username: depot
+      password: yourpassword
+
+...and this step will make it possible for your rails app to query the DB:
+
+1. Open `/etc/postgresql/8.4/main/pg_hba.conf` in your favorite text editor
+2. Change this line:
+  * `local   all         all                               ident`
+3. ...to this:
+  * `local   all         all                               md5`
+4. Finally, restart the db server using this command:
+  * `sudo /etc/init.d/postgresql restart`
+5. Now make sure that you can log into your database using psql. You
+   should see something like this:
+
+    $ psql -U depot --password depot-dev
+    Password for user depot: 
+    psql (8.4.8)
+    Type "help" for help.
+
+    depot=> \q
+
+==== Testing
+    
+    $ cd src_dir
+    $ rvm use 1.9.3
+    $ rails server
+    (( Visit http://localhost:3000 ))
+
+==== Troubleshooting
+
+If you are having db access issues, try installing `phppgadmin`. Please note
+though that it can log into your database, even is you don't change
+pg_hba.conf. This *isn't* true for your rails app.
+
+
+
