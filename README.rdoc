@@ -82,11 +82,15 @@ like this.
     $ rails server
     (( Visit http://localhost:3000 ))
 
+Now let's set up the db and run the tests:
+
+    $ rake db:migrate
+    $ rake test:units
+
+Neither of these commands should produce any errors.
+
 ==== Troubleshooting
 
 If you are having db access issues, try installing `phppgadmin`. Please note
 though that it can log into your database, even is you don't change
 pg_hba.conf. This *isn't* true for your rails app.
-
-
-

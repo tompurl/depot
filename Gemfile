@@ -23,6 +23,10 @@ end
 
 gem 'jquery-rails'
 
+# Ensure that V8 is installed on Ubuntu.
+# http://adanacs.com/node/3
+gem 'therubyracer', '>=0.8.2'
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
