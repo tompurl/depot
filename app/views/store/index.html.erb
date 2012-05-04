@@ -13,8 +13,8 @@
       <%= sanitize(product.description) %>
     </h3>
     <div class="price_line">
-      <span class="price"
-        <%= product.price %>
+      <span class="price">
+        <%= number_to_currency(product.price) %>
       </span>
     </div>
   </div>
